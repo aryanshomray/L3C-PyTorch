@@ -21,7 +21,7 @@ from torch import nn
 from modules import edsr
 from pytorch_ext import default_conv as conv
 
-
+NUM_CHANNELS = 220
 
 class RGBHead(nn.Module):
     """ Go from 3 channels (RGB) to Cf channels, also normalize RGB """
@@ -30,7 +30,7 @@ class RGBHead(nn.Module):
         assert 'Subsampling' not in config_ms.enc.cls, 'For Subsampling encoders, head should be ID'
         self.head = nn.Sequential(
                 edsr.MeanShift(0, (0., 0., 0.), (128., 128., 128.)),
-                Head(config_ms, Cin=3))
+                Head(config_ms, Cin=NUM_CHANNELS))
         self._repr = 'MeanShift//Head(C=3)'
 
     def __repr__(self):
